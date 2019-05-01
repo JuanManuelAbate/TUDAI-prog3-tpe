@@ -1,20 +1,21 @@
 package dominio;
 
+import estructuras.GrafoAeropuerto;
 import estructuras.GrafoDirigido;
 import estructuras.MyLinkedList;
 
-public class Aereolinea {
+public class SistemaAero {
 
 	private GrafoDirigido conexiones;
 	private MyLinkedList reservas;
 	
-	public Aereolinea(int numeroAereopuertos) {
-		conexiones = new GrafoDirigido(numeroAereopuertos);
+	public SistemaAero(int numeroAereopuertos) {
+		conexiones = new GrafoAeropuerto(numeroAereopuertos);
 		reservas = new MyLinkedList();
 	}
 	
-	public void agregarAereopuerto(Aereopuerto aereopuerto) {
-		conexiones.addVertice(aereopuerto);
+	public void agregarAeropuerto(Aeropuerto aeropuerto) {
+		conexiones.addVertice(aeropuerto);
 	}
 	
 	public void agregarConexion(String origen, String destino, Etiqueta etiqueta) {

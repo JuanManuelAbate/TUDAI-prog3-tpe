@@ -1,8 +1,6 @@
 package estructuras;
 
-import dominio.Aereopuerto;
-
-public class GrafoDirigido {
+public abstract class GrafoDirigido {
 
 	protected Vertice[] vertices;
 	protected int libre;
@@ -18,22 +16,5 @@ public class GrafoDirigido {
 		libre = libre + 1;
 	}
 	
-	public void addArco(Object origen, Object destino, Object valor) {
-		Vertice aux = null;
-		Vertice aux2 = null;
-		Aereopuerto aDestino = null;
-		Aereopuerto aOrigen = null;
-		for (int i = 0; i < vertices.length; i++) {
-			aDestino = (Aereopuerto) vertices[i].getValor();
-			aOrigen = (Aereopuerto) vertices[i].getValor();
-			if (aDestino.getNombre().equals((String) destino)) {
-				aux = vertices[i];
-			}
-			if (aOrigen.getNombre().equals((String) origen)) {
-				aux2 = vertices[i];
-			}
-		}
-		aux2.addAdyacente(aux, valor);
-	}
-	
+	public abstract void addArco(Object origen, Object destino, Object valor);
 }
