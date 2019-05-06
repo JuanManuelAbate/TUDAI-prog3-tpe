@@ -32,5 +32,11 @@ public class Etiqueta {
 	public void agregarAerolineaAsientos(String aerolinea, Integer asientos) {
 		aerolineaAsientos.put(aerolinea, asientos);
 	}
-	
+	public boolean contieneAerolinea(String aerolinea)	{
+		return aerolineaAsientos.containsKey(aerolinea);
+		
+	}
+	public int getAsientosAerolinea(String aerolinea) {
+		return aerolineaAsientos.get(aerolinea);
+	}
 }

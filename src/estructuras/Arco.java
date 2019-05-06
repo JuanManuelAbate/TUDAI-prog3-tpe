@@ -13,4 +13,7 @@ public class Arco {
 	public Vertice getDestino() {
 		return destino;
 	}
+	public Object getValor() {
+		return valor;
+	}
 }

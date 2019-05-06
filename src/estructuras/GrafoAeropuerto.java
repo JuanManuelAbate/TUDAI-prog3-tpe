@@ -1,8 +1,11 @@
 package estructuras;
 
-import dominio.Aeropuerto;
+import java.util.Iterator;
 
-public class GrafoAeropuerto extends GrafoDirigido {
+import dominio.Aeropuerto;
+import dominio.Etiqueta;
+
+public class GrafoAeropuerto extends Grafo {
 	
 	public GrafoAeropuerto(int size) {
 		super(size);
@@ -25,6 +28,26 @@ public class GrafoAeropuerto extends GrafoDirigido {
 			}
 		}
 		aux2.addAdyacente(aux, valor);
+		aux.addAdyacente(aux2,valor);
 	}
 
+	public Etiqueta verificarVueloDirecto(String origen, String destino){
+		Aeropuerto a;
+		Arco b;
+		Etiqueta e=null;
+		for(int i=0;i<vertices.length;i++) {
+			a=(Aeropuerto)vertices[i].getValor();
+			if(a.getNombre().equals(origen)) {
+				Iterator<Object> it = vertices[i].getAdyacentes().iterator(); 
+				while(it.hasNext()){
+					b=(Arco)it.next();
+					Aeropuerto c = (Aeropuerto) b.getDestino().getValor();
+					if(c.getNombre().equals(destino)) {
+					 e=(Etiqueta)b.getValor();
+					}
+				}
+			}
+		}
+		return e;
+	}
 }
