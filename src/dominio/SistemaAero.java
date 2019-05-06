@@ -27,6 +27,7 @@ public class SistemaAero {
 	
 	public void agregarReserva(Reserva reserva) {
 		reservas.insertFront(reserva);
+		conexiones.actualizarAsientos(reserva.getOrigen(), reserva.getDestino(), reserva.getAerolinea(), reserva.getAsientos());
 	}
 	
 	//puntos solicitados
@@ -55,18 +56,8 @@ public class SistemaAero {
 		if(!e.contieneAerolinea(aerolinea)){
 			return null;
 		}
-		int asientos= e.getAsientosAerolinea(aerolinea);
+		int asientos= e.getAsientosDisponiblesAerolinea(aerolinea);
 		
-		Iterator<Object> it= reservas.iterator();
-		Reserva r;
-		while(it.hasNext()){
-			r=(Reserva)it.next();
-			if (r.getOrigen().equals(origen) &&
-				r.getDestino().equals(destino) &&
-				r.getAerolinea().equals(aerolinea)) {
-				asientos= asientos - r.getAsientos();
-			}
-		}
 		vuelo.setCantidadAsientos(asientos);
 		vuelo.setKilometros(e.getKm());
 		return vuelo;

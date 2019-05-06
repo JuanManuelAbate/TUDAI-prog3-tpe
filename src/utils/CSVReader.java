@@ -34,18 +34,6 @@ public class CSVReader {
             e.printStackTrace();
         }
         
-        try (BufferedReader br = new BufferedReader(new FileReader(archivoReservas))) {
-        	
-            while ((line = br.readLine()) != null) {
-
-                String[] items = line.split(cvsSplitBy);
-                sistemaAero.agregarReserva(new Reserva(items[0], items[1], items[2], Integer.parseInt(items[3])));
-            }
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
         try (BufferedReader br = new BufferedReader(new FileReader(archivoRutas))) {
         	
             while ((line = br.readLine()) != null) {
@@ -65,6 +53,18 @@ public class CSVReader {
                 	etiqueta.agregarAerolineaAsientos(aerolineaAsientos[0], Integer.parseInt(aerolineaAsientos[1]));
                 }
                 sistemaAero.agregarConexion(items[0], items[1], etiqueta);
+            }
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(archivoReservas))) {
+        	
+            while ((line = br.readLine()) != null) {
+
+                String[] items = line.split(cvsSplitBy);
+                sistemaAero.agregarReserva(new Reserva(items[0], items[1], items[2], Integer.parseInt(items[3])));
             }
             
         } catch (IOException e) {

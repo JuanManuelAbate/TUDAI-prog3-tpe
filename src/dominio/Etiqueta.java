@@ -2,17 +2,28 @@ package dominio;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Etiqueta {
 
 	double km;
 	boolean cabotaje;
-	Map<String, Integer> aerolineaAsientos;
+	Map<String, Asiento> aerolineaAsientos;
 	
 	public Etiqueta() {
 		aerolineaAsientos = new HashMap<>();
 	}
 	
+	public Etiqueta(Etiqueta e) {
+		this.km = e.km;
+		this.cabotaje = e.cabotaje;
+		aerolineaAsientos = new HashMap<>();
+		Set<String> claves = e.aerolineaAsientos.keySet();
+		for (String clave:claves) {
+			this.aerolineaAsientos.put(clave, new Asiento(e.aerolineaAsientos.get(clave).getAsientosTotales()));
+		}
+	}
+
 	public double getKm() {
 		return km;
 	}
@@ -30,13 +41,18 @@ public class Etiqueta {
 	}
 	
 	public void agregarAerolineaAsientos(String aerolinea, Integer asientos) {
-		aerolineaAsientos.put(aerolinea, asientos);
+		aerolineaAsientos.put(aerolinea, new Asiento(asientos));
 	}
 	public boolean contieneAerolinea(String aerolinea)	{
 		return aerolineaAsientos.containsKey(aerolinea);
 		
 	}
-	public int getAsientosAerolinea(String aerolinea) {
-		return aerolineaAsientos.get(aerolinea);
+	public int getAsientosDisponiblesAerolinea(String aerolinea) {
+		return aerolineaAsientos.get(aerolinea).getAsientosDisponibles();
 	}
+
+	public void actualizarAsientos(String aerolinea, int asientos) {
+		aerolineaAsientos.get(aerolinea).reservarAsientos(asientos);
+	}
+	
 }

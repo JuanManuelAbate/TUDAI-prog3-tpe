@@ -27,8 +27,9 @@ public class GrafoAeropuerto extends Grafo {
 				aux2 = vertices[i];
 			}
 		}
-		aux2.addAdyacente(aux, valor);
-		aux.addAdyacente(aux2,valor);
+		Etiqueta e = (Etiqueta) valor;
+		aux2.addAdyacente(aux, e);
+		aux.addAdyacente(aux2,new Etiqueta(e));
 	}
 
 	public Etiqueta verificarVueloDirecto(String origen, String destino){
@@ -49,5 +50,26 @@ public class GrafoAeropuerto extends Grafo {
 			}
 		}
 		return e;
+	}
+
+	public void actualizarAsientos(String origen, String destino, String aerolinea, int asientos) {
+		Aeropuerto aOrigen = null;
+		Aeropuerto aDestino = null;
+		for(int i = 0; i < vertices.length; i++) {
+			aOrigen = (Aeropuerto) vertices[i].getValor();
+			if (aOrigen.getNombre().equals(origen)) {
+				Iterator<Object> it = vertices[i].getAdyacentes().iterator();
+				Arco a;
+				while (it.hasNext()) {
+					a = (Arco) it.next();
+					aDestino = (Aeropuerto) a.getDestino().getValor();
+					if (aDestino.getNombre().equals(destino)) {
+						Etiqueta e = (Etiqueta) a.getValor();
+						e.actualizarAsientos(aerolinea, asientos);
+					}
+				}
+			}
+		}
+		
 	}
 }
