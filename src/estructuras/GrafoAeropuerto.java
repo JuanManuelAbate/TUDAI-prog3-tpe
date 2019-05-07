@@ -1,9 +1,11 @@
 package estructuras;
 
 import java.util.Iterator;
+import java.util.Map;
 
 import dominio.Aeropuerto;
 import dominio.Etiqueta;
+import respuestas.VueloDirectoAerolineas;
 
 public class GrafoAeropuerto extends Grafo {
 	
@@ -71,5 +73,29 @@ public class GrafoAeropuerto extends Grafo {
 			}
 		}
 		
+	}
+
+	public MyLinkedList vuelosDirectosEntrePaises(String paisOrigen, String paisDestino) {
+		MyLinkedList resultado = new MyLinkedList();
+		Aeropuerto aOrigen = null;
+		Aeropuerto aDestino = null;
+		for(int i = 0; i < vertices.length; i++) {
+			aOrigen = (Aeropuerto) vertices[i].getValor();
+			if (aOrigen.getPais().equals(paisOrigen)) {
+				Iterator<Object> it = vertices[i].getAdyacentes().iterator();
+				while(it.hasNext()) {
+					Arco a = (Arco) it.next();
+					aDestino = (Aeropuerto) a.getDestino().getValor();
+					if (aDestino.getPais().equals(paisDestino)) {
+						Etiqueta e = (Etiqueta) a.getValor();
+						Map<String, Integer> aerolineaPasajes = e.getAerolineasDisponibles();
+						if (!aerolineaPasajes.isEmpty()) {
+							resultado.insertFront(new VueloDirectoAerolineas(aOrigen.getNombre(), aDestino.getNombre(), e.getKm(), aerolineaPasajes));
+						}
+					}
+				}
+			}
+		}
+		return resultado;
 	}
 }

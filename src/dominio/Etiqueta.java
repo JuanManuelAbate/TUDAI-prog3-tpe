@@ -54,5 +54,16 @@ public class Etiqueta {
 	public void actualizarAsientos(String aerolinea, int asientos) {
 		aerolineaAsientos.get(aerolinea).reservarAsientos(asientos);
 	}
+
+	public Map<String, Integer> getAerolineasDisponibles() {
+		Map<String, Integer> aerolineasDisponibles = new HashMap<>();
+		Set<String> claves = aerolineaAsientos.keySet();
+		for (String clave : claves) {
+			if (aerolineaAsientos.get(clave).getAsientosDisponibles() != 0) {
+				aerolineasDisponibles.put(clave, aerolineaAsientos.get(clave).getAsientosDisponibles());
+			}
+		}
+		return aerolineasDisponibles;
+	}
 	
 }

@@ -1,10 +1,14 @@
 package tpe;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import dominio.*;
+import estructuras.MyLinkedList;
 import respuestas.VueloDirecto;
+import respuestas.VueloDirectoAerolineas;
 import utils.CSVReader;
 
 public class Main {
@@ -72,20 +76,41 @@ public class Main {
 		    		System.out.println();
 		    		break;
 		        case 4:
-		            System.out.println(opcion);
+		        	
 		            break;
 		        case 5:
-		        	System.out.println(opcion);
+		        	System.out.println();
+		    		System.out.println("Ingresar pais de origen");
+		    		String paisOrigen = scanner.nextLine();
+		    		System.out.println("Ingresar pais de destino");
+		    		String paisDestino = scanner.nextLine();
+		    		
+		    		MyLinkedList vueloDirectoAerolineasLista = sistemaAero.vuelosDirectoEntrePaises(paisOrigen, paisDestino);
+	    			System.out.println("Resultado:");
+		    		if (vueloDirectoAerolineasLista.isEmpty()) {
+		    			System.out.println("No existen vuelos directos disponibles entre los paises ingresados.");
+		    		} else {
+		    			it = vueloDirectoAerolineasLista.iterator();
+		    			VueloDirectoAerolineas vueloDirectoAerolineas;
+		    			while(it.hasNext()) {
+		    				vueloDirectoAerolineas = (VueloDirectoAerolineas) it.next();
+		    				System.out.println("Aeropuerto Origen:" + vueloDirectoAerolineas.getAeropuertoOrigen() +
+		    								   " | Aeropuerto Destino:" + vueloDirectoAerolineas.getAeropuertoDestino() +
+		    								   " | Km requeridos:" + vueloDirectoAerolineas.getDistancia());
+		    				System.out.println("Aerolineas disponibles: ");
+		    				Map<String, Integer> aerolineaPasajes = vueloDirectoAerolineas.getAerolineaPasajes();
+		    				Set<String> claves = aerolineaPasajes.keySet();
+		    				for (String clave : claves) {
+			    				System.out.println("*" + clave + "-" + aerolineaPasajes.get(clave) + " pasajes disponibles");
+		    				}
+		    				System.out.println();
+		    			}
+		    		}
+		    		System.out.println();
 		            break;
 		        default:
 		        	ejecucion = false;
 		    }
 		}
-		
-		/*
-		VueloDirecto v=sistemaAero.VerificarVueloDirecto("Comodoro Benitez", "El prat", "Delta");
-		System.out.println(v.getCantidadAsientos());
-		System.out.println(v.getKilometros());
-		*/
 	}
 }

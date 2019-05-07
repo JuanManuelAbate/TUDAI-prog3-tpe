@@ -2,8 +2,6 @@ package dominio;
 
 import estructuras.GrafoAeropuerto;
 
-import java.util.Iterator;
-
 import estructuras.MyLinkedList;
 import respuestas.VueloDirecto;
 
@@ -65,5 +63,8 @@ public class SistemaAero {
 	//servicio 2
 	
 	//servicio 3
+	public MyLinkedList vuelosDirectoEntrePaises(String paisOrigen, String paisDestino) {
+		return conexiones.vuelosDirectosEntrePaises(paisOrigen, paisDestino);
+	}
 	
 }
