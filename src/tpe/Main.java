@@ -10,6 +10,7 @@ import estructuras.MyLinkedList;
 import respuestas.VueloDirecto;
 import respuestas.VueloDirectoAerolineas;
 import utils.CSVReader;
+import utils.CSVWritter;
 
 public class Main {
 	
@@ -40,7 +41,9 @@ public class Main {
 		        case 1:
 		            System.out.println();
 		            System.out.println("Lista de aeropuertos:");
-		            it = sistemaAero.getAeropuertos().iterator();
+		            MyLinkedList listaAeropuertos = sistemaAero.getAeropuertos();
+		            CSVWritter.generarArchivoListaAeropuertos(listaAeropuertos);
+		            it = listaAeropuertos.iterator();
 		    		while(it.hasNext()) {
 		    			Aeropuerto aeropuerto = (Aeropuerto)it.next();
 		    			System.out.println(aeropuerto.getNombre());
@@ -50,7 +53,9 @@ public class Main {
 		        case 2:
 		        	System.out.println();
 		            System.out.println("Lista de reservas:");
-		        	it = sistemaAero.getReservas().iterator();
+		            MyLinkedList listaReservas = sistemaAero.getReservas();
+		            CSVWritter.generarArchivoListaReservas(listaReservas);
+		        	it = listaReservas.iterator();
 		    		while (it.hasNext()) {
 		    			Reserva reserva = (Reserva) it.next();
 		    			System.out.println("Origen:"+reserva.getOrigen()+" | Destino:"+reserva.getDestino()+" | Aerolinea:"+ reserva.getAerolinea()+" | Asientos:"+reserva.getAsientos());
@@ -71,11 +76,13 @@ public class Main {
 		    		if (vueloDirecto == null) {
 		    			System.out.println("No existe vuelo directo para la combinacion ingresada");
 		    		} else {
+		    			CSVWritter.generarArchivoVueloDirecto(vueloDirecto);
 			    		System.out.println("Km requeridos:" + vueloDirecto.getKilometros() + " | Asientos disponibles:" + vueloDirecto.getCantidadAsientos());
 		    		}
 		    		System.out.println();
 		    		break;
 		        case 4:
+		        	MyLinkedList debug=sistemaAero.vuelosDisponibles("Comodoro Benitez","El prat", "Delta");
 		        	
 		            break;
 		        case 5:
@@ -90,6 +97,7 @@ public class Main {
 		    		if (vueloDirectoAerolineasLista.isEmpty()) {
 		    			System.out.println("No existen vuelos directos disponibles entre los paises ingresados.");
 		    		} else {
+		    			//CSVWritter.generarArchivoVuelosDirectosEntrePaises(vueloDirectoAerolineasLista);
 		    			it = vueloDirectoAerolineasLista.iterator();
 		    			VueloDirectoAerolineas vueloDirectoAerolineas;
 		    			while(it.hasNext()) {

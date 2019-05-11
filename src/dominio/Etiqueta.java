@@ -65,5 +65,14 @@ public class Etiqueta {
 		}
 		return aerolineasDisponibles;
 	}
+	public String contieneAerolineaNoExcluyente(String aerolinea) {
+		Set<String> claves = aerolineaAsientos.keySet();
+		for(String clave: claves) {
+			if(!clave.equals(aerolinea)&& (aerolineaAsientos.get(clave).getAsientosDisponibles()>0 )){
+				return clave;
+			}
+		}
+		return null;
+	}
 	
 }

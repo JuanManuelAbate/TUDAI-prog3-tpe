@@ -6,6 +6,7 @@ import java.util.Map;
 import dominio.Aeropuerto;
 import dominio.Etiqueta;
 import respuestas.VueloDirectoAerolineas;
+import respuestas.VueloDisponibleAeroExcluyente;
 
 public class GrafoAeropuerto extends Grafo {
 	
@@ -97,5 +98,52 @@ public class GrafoAeropuerto extends Grafo {
 			}
 		}
 		return resultado;
+	}
+	public MyLinkedList vuelosDisponibles(String origen,String destino, String excluyente) {
+		MyLinkedList vuelosdisp=new MyLinkedList();
+		
+		//get referencia al vertice de origen 
+		Vertice v= this.getVerticePorNombreAeropuerto(origen);
+		
+		//llamo al metodo recursivo con el origen
+		vuelosDisponiblesPrivate(v,excluyente,destino,0,0,vuelosdisp);
+		
+		
+		return vuelosdisp;
+	}
+	
+	private void vuelosDisponiblesPrivate(Vertice origen,String excluyente,String destino,double contadorkm,int contadorescalas,MyLinkedList vuelosdisp) {
+		 origen.setVisitado(true);
+		 Iterator<Object> it= origen.getAdyacentes().iterator();
+		 while(it.hasNext()) {
+			 Arco a=(Arco)it.next();
+			 Vertice v= a.getDestino();
+			 Etiqueta e= (Etiqueta)a.getValor();
+			 String aerolinea= e.contieneAerolineaNoExcluyente(excluyente);
+			 if (!v.getVisitado()&&aerolinea!=null){
+				 Aeropuerto aero= (Aeropuerto)v.getValor();
+				 if(aero.getNombre().equals(destino)) {
+					 //generamos respuesta y la agregamos a la lista
+					 VueloDisponibleAeroExcluyente vuelo=new VueloDisponibleAeroExcluyente(aerolinea,contadorescalas,contadorkm);
+					 vuelosdisp.insertFront(vuelo);
+				 }
+				 else {
+					 vuelosDisponiblesPrivate(v,excluyente,destino,contadorkm+e.getKm(),contadorescalas + 1,vuelosdisp);
+
+				 }
+			 }
+		 }
+		 origen.setVisitado(false);
+	}
+	
+	private Vertice getVerticePorNombreAeropuerto(String nombre) {
+		Vertice v=null;
+		for(int i=0; i<vertices.length;i++) {
+			Aeropuerto a= (Aeropuerto)vertices[i].getValor();
+			if(a.getNombre().equals(nombre)) {
+				v= vertices[i];
+			}
+		}
+		return v;
 	}
 }

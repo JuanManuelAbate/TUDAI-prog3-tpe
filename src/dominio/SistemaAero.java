@@ -61,6 +61,9 @@ public class SistemaAero {
 		return vuelo;
 	}
 	//servicio 2
+	public MyLinkedList vuelosDisponibles(String origen,String destino,String excluyente) {
+		return conexiones.vuelosDisponibles(origen, destino, excluyente);
+	}
 	
 	//servicio 3
 	public MyLinkedList vuelosDirectoEntrePaises(String paisOrigen, String paisDestino) {
