@@ -124,7 +124,7 @@ public class GrafoAeropuerto extends Grafo {
 				 Aeropuerto aero= (Aeropuerto)v.getValor();
 				 if(aero.getNombre().equals(destino)) {
 					 //generamos respuesta y la agregamos a la lista
-					 VueloDisponibleAeroExcluyente vuelo=new VueloDisponibleAeroExcluyente(aerolinea,contadorescalas,contadorkm);
+					 VueloDisponibleAeroExcluyente vuelo=new VueloDisponibleAeroExcluyente(aerolinea,contadorescalas,contadorkm+e.getKm());
 					 vuelosdisp.insertFront(vuelo);
 				 }
 				 else {

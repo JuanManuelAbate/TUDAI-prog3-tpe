@@ -9,6 +9,7 @@ import dominio.*;
 import estructuras.MyLinkedList;
 import respuestas.VueloDirecto;
 import respuestas.VueloDirectoAerolineas;
+import respuestas.VueloDisponibleAeroExcluyente;
 import utils.CSVReader;
 import utils.CSVWritter;
 
@@ -82,8 +83,20 @@ public class Main {
 		    		System.out.println();
 		    		break;
 		        case 4:
-		        	MyLinkedList debug=sistemaAero.vuelosDisponibles("Comodoro Benitez","El prat", "Delta");
+		        	MyLinkedList debug=sistemaAero.vuelosDisponibles("Comodoro Benitez","Logan", "Delta");
+		        	if(debug.isEmpty()) {
+		        		System.out.println("No existen vuelos disponibles");
+		        	}
+		        	else {
+		        		
 		        	
+			        	Iterator<Object> iterator = debug.iterator();
+			        	
+			        	while(iterator.hasNext()) {
+			        		VueloDisponibleAeroExcluyente vuelo= (VueloDisponibleAeroExcluyente)iterator.next();
+			        		System.out.println("Aerolinea :"+vuelo.getAerolinea()+"; Cantidad de escalas: "+vuelo.getEscalas()+"; Cantidad Kilometros: "+vuelo.getKms());
+			        	}
+		        	}
 		            break;
 		        case 5:
 		        	System.out.println();
@@ -109,7 +122,7 @@ public class Main {
 		    				Map<String, Integer> aerolineaPasajes = vueloDirectoAerolineas.getAerolineaPasajes();
 		    				Set<String> claves = aerolineaPasajes.keySet();
 		    				for (String clave : claves) {
-			    				System.out.println("*" + clave + "-" + aerolineaPasajes.get(clave) + " pasajes disponibles");
+			    				System.out.println("*" + clave + " - " + aerolineaPasajes.get(clave) + " pasajes disponibles");
 		    				}
 		    				System.out.println();
 		    			}
