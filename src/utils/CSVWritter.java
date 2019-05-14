@@ -15,6 +15,7 @@ import dominio.Reserva;
 import estructuras.MyLinkedList;
 import respuestas.VueloDirecto;
 import respuestas.VueloDirectoAerolineas;
+import respuestas.VueloDisponibleAeroExcluyente;
 
 public class CSVWritter {
 
@@ -23,7 +24,7 @@ public class CSVWritter {
 		try {
 			Date date = new Date();
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-			File file = new File(formatter.format(date) + "-Lista aeropuertos.csv");
+			File file = new File(formatter.format(date) + " - Listar todos los aeropuertos.csv");
 			if (!file.exists()) {
 				file.createNewFile();
 			}
@@ -55,7 +56,7 @@ public class CSVWritter {
 		try {
 			Date date = new Date();
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-			File file = new File(formatter.format(date) + "-Lista reservas.csv");
+			File file = new File(formatter.format(date) + " - Listar todas las reservas realizadas.csv");
 			if (!file.exists()) {
 				file.createNewFile();
 			}
@@ -87,7 +88,7 @@ public class CSVWritter {
 		try {
 			Date date = new Date();
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-			File file = new File(formatter.format(date) + "-Vuelo directo.csv");
+			File file = new File(formatter.format(date) + " - Servicio 1: Verificar vuelo directo.csv");
 			if (!file.exists()) {
 				file.createNewFile();
 			}
@@ -110,13 +111,12 @@ public class CSVWritter {
 		}
 	}
 
-	/*
 	public static void generarArchivoVuelosDirectosEntrePaises(MyLinkedList vueloDirectoAerolineasLista) {
 		BufferedWriter bw = null;
 		try {
 			Date date = new Date();
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-			File file = new File(formatter.format(date) + "-Vuelos directos entre paises.csv");
+			File file = new File(formatter.format(date) + " - Servicio 3: Vuelos disponibles.csv");
 			if (!file.exists()) {
 				file.createNewFile();
 			}
@@ -128,22 +128,18 @@ public class CSVWritter {
 			VueloDirectoAerolineas vueloDirectoAerolineas;
 			while(it.hasNext()) {
 				vueloDirectoAerolineas = (VueloDirectoAerolineas) it.next();
-				System.out.println("Aeropuerto Origen:" + vueloDirectoAerolineas.getAeropuertoOrigen() +
-								   " | Aeropuerto Destino:" + vueloDirectoAerolineas.getAeropuertoDestino() +
-								   " | Km requeridos:" + vueloDirectoAerolineas.getDistancia());
-				System.out.println("Aerolineas disponibles: ");
+				bw.write("Aeropuerto Origen:" + vueloDirectoAerolineas.getAeropuertoOrigen() +
+						" | Aeropuerto Destino:" + vueloDirectoAerolineas.getAeropuertoDestino() +
+						" | Km requeridos:" + vueloDirectoAerolineas.getDistancia());
+				bw.newLine();
+				bw.write("Aerolineas disponibles: ");
+				bw.newLine();
 				Map<String, Integer> aerolineaPasajes = vueloDirectoAerolineas.getAerolineaPasajes();
 				Set<String> claves = aerolineaPasajes.keySet();
 				for (String clave : claves) {
-    				System.out.println("*" + clave + "-" + aerolineaPasajes.get(clave) + " pasajes disponibles");
+					bw.write("*" + clave + " - " + aerolineaPasajes.get(clave) + " pasajes disponibles");
+					bw.newLine();
 				}
-				System.out.println();
-			}
-			
-			Iterator<Object> it = listaReservas.iterator();
-			while(it.hasNext()) {
-				Reserva reserva = (Reserva) it.next();
-				bw.write("Origen:"+reserva.getOrigen()+" | Destino:"+reserva.getDestino()+" | Aerolinea:"+ reserva.getAerolinea()+" | Asientos:"+reserva.getAsientos());
 				bw.newLine();
 			}
 
@@ -158,5 +154,39 @@ public class CSVWritter {
 			}
 		}
 	}
-	*/
+
+	public static void generarARchivoVuelosEntreAeropuertosSinAerolinea(MyLinkedList vuelosDisponibles) {
+		BufferedWriter bw = null;
+		try {
+			Date date = new Date();
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+			File file = new File(formatter.format(date) + " - Servicio 2: Obtener vuelos sin aerolinea.csv");
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			FileWriter fw = new FileWriter(file);
+			bw = new BufferedWriter(fw);
+
+			Iterator<Object> it = vuelosDisponibles.iterator();
+			VueloDisponibleAeroExcluyente vueloDisponibleAeroExcluyente;
+			while(it.hasNext()) {
+				vueloDisponibleAeroExcluyente = (VueloDisponibleAeroExcluyente) it.next();
+				bw.write("Aerolinea: "+vueloDisponibleAeroExcluyente.getAerolinea()+" | Cantidad de escalas: "+vueloDisponibleAeroExcluyente.getEscalas()+" | Cantidad Kilometros: "+vueloDisponibleAeroExcluyente.getKms());
+				bw.newLine();
+			}
+
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} finally {
+			try {
+				if (bw != null)
+					bw.close();
+			} catch (Exception ex) {
+				System.out.println("Error cerrando el BufferedWriter" + ex);
+			}
+		}	
+	}
+	
+	
 }

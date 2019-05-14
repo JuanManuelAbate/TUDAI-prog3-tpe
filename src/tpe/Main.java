@@ -83,20 +83,28 @@ public class Main {
 		    		System.out.println();
 		    		break;
 		        case 4:
-		        	MyLinkedList debug=sistemaAero.vuelosDisponibles("Comodoro Benitez","Logan", "Delta");
-		        	if(debug.isEmpty()) {
+		        	System.out.println();
+		    		System.out.println("Ingresar aeropuerto de origen");
+		    		aeropuertoOrigen = scanner.nextLine();
+		    		System.out.println("Ingresar aeropuerto de destino");
+		    		aeropuertoDestino = scanner.nextLine();
+		    		System.out.println("Ingresar aerolinea no deseada");
+		    		aerolinea = scanner.nextLine();
+		    		
+		        	MyLinkedList vuelosDisponibles=sistemaAero.vuelosDisponibles(aeropuertoOrigen,aeropuertoDestino, aerolinea);
+	    			System.out.println("Resultado:");
+		        	if(vuelosDisponibles.isEmpty()) {
 		        		System.out.println("No existen vuelos disponibles");
 		        	}
 		        	else {
-		        		
-		        	
-			        	Iterator<Object> iterator = debug.iterator();
-			        	
-			        	while(iterator.hasNext()) {
-			        		VueloDisponibleAeroExcluyente vuelo= (VueloDisponibleAeroExcluyente)iterator.next();
-			        		System.out.println("Aerolinea :"+vuelo.getAerolinea()+"; Cantidad de escalas: "+vuelo.getEscalas()+"; Cantidad Kilometros: "+vuelo.getKms());
+		        		CSVWritter.generarARchivoVuelosEntreAeropuertosSinAerolinea(vuelosDisponibles);
+			        	it = vuelosDisponibles.iterator();
+			        	while(it.hasNext()) {
+			        		VueloDisponibleAeroExcluyente vuelo = (VueloDisponibleAeroExcluyente) it.next();
+			        		System.out.println("Aerolinea: "+vuelo.getAerolinea()+" | Cantidad de escalas: "+vuelo.getEscalas()+" | Cantidad Kilometros: "+vuelo.getKms());
 			        	}
 		        	}
+		    		System.out.println();
 		            break;
 		        case 5:
 		        	System.out.println();
@@ -110,7 +118,7 @@ public class Main {
 		    		if (vueloDirectoAerolineasLista.isEmpty()) {
 		    			System.out.println("No existen vuelos directos disponibles entre los paises ingresados.");
 		    		} else {
-		    			//CSVWritter.generarArchivoVuelosDirectosEntrePaises(vueloDirectoAerolineasLista);
+		    			CSVWritter.generarArchivoVuelosDirectosEntrePaises(vueloDirectoAerolineasLista);
 		    			it = vueloDirectoAerolineasLista.iterator();
 		    			VueloDirectoAerolineas vueloDirectoAerolineas;
 		    			while(it.hasNext()) {
