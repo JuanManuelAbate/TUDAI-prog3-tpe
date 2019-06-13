@@ -69,5 +69,15 @@ public class SistemaAero {
 	public MyLinkedList vuelosDirectoEntrePaises(String paisOrigen, String paisDestino) {
 		return conexiones.vuelosDirectosEntrePaises(paisOrigen, paisDestino);
 	}
+
+	//segunda entrega viajante greedy
+	public void chequearVisitarAeropuertosGreedy(String aeropuertoOrigen) {
+		conexiones.viajanteGreedy(aeropuertoOrigen);
+	}
+	
+	//segunda entrega viajante backtracking
+	public void chequearVisitarAeropuertosBacktracking(String origen) {
+		conexiones.viajanteBacktracking(origen);
+	}
 	
 }

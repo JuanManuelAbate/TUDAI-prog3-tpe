@@ -33,7 +33,9 @@ public class Main {
 			System.out.println("3. Servicio 1: Verificar vuelo directo.");
 			System.out.println("4. Servicio 2: Obtener vuelos sin aerolinea.");
 			System.out.println("5. Servicio 3: Vuelos disponibles.");
-			System.out.println("6. Salir.");
+			System.out.println("6. Segunda entrega: greedy.");
+			System.out.println("7. Segunda entrega: backtracking.");
+			System.out.println("8. Salir.");
 			System.out.println("******************************************************************");
 			opcion = scanner.nextInt();
 			scanner.nextLine();
@@ -137,6 +139,22 @@ public class Main {
 		    		}
 		    		System.out.println();
 		            break;
+		        case 6:
+		        	System.out.println();
+		        	System.out.println("Ingresar aeropuerto de origen");
+		    		aeropuertoOrigen = scanner.nextLine();
+		    		
+		    		sistemaAero.chequearVisitarAeropuertosGreedy(aeropuertoOrigen);
+		    		System.out.println();
+		            break;
+		        case 7:
+		        	System.out.println();
+		        	System.out.println("Ingresar aeropuerto de origen");
+		    		aeropuertoOrigen = scanner.nextLine();
+		    		
+		    		sistemaAero.chequearVisitarAeropuertosBacktracking(aeropuertoOrigen);
+		    		System.out.println();
+		    		break;
 		        default:
 		        	ejecucion = false;
 		    }
